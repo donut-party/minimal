@@ -1,0 +1,5 @@
+{:lint-as {donut.todo-example.data/with-test-data clojure.core/let
+           ;; imperfect, but good enough
+           lambdaisland.ornament/defstyled clojure.core/defmacro}
+ :config-paths ["party.donut/frontend"
+                "metosin/malli"]}
