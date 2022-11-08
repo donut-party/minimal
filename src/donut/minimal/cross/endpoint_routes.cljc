@@ -6,12 +6,12 @@
 (def routes
   (dr/merge-route-opts
    [["/api/v1/users"
-     {:name     :first-route
+     {:name     :users
       :ent-type :user
       :id-key   :user/id}
      #?(:clj user/collection-handlers)]
     ["/api/v1/users/{:user/id}"
-     {:name     :first-route
+     {:name     :user
       :ent-type :user
       :id-key   :user/id}
      #?(:clj user/member-handlers)]]))
