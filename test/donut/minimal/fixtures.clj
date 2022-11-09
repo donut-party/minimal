@@ -1,4 +1,4 @@
-(ns donut.minimal.data
+(ns donut.minimal.fixtures
   (:require
    [donut.datapotato.next-jdbc :as dfn]
    [donut.endpoint.test.harness :as deth]
