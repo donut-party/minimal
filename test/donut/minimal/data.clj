@@ -1,29 +1,31 @@
 (ns donut.minimal.data
-  (:require [clojure.spec.alpha :as s]
-            [clojure.spec.gen.alpha :as sg]
-            [donut.datapotato.next-jdbc :as dfn]
-            [donut.endpoint.test.harness :as deth]
-            [donut.minimal.backend.system] ;; for multimethod
-            [next.jdbc :as jdbc]))
+  (:require
+   [donut.datapotato.next-jdbc :as dfn]
+   [donut.endpoint.test.harness :as deth]
+   [donut.minimal.backend.system] ;; for multimethod
+   ))
 
 (defn db-connection
   []
   (deth/instance [:db :connection]))
 
-(s/def :user/username string?)
-
-(s/def :user/entity
-  (s/keys :req-un [:user/username]))
-
-(def dd-schema
-  {:user      {:prefix    :u
-               :generate  {:schema :user/entity}
-               :fixtures  {:table-name "user"}}})
+(def potato-schema
+  {:example-entity {:prefix   :ee
+                    :generate {:schema :example-entity/record}
+                    :fixtures {:table-name "example_entity"}}})
 
 (def datapotato-db
-  {:schema   dd-schema
-   :generate {:generator (comp sg/generate s/gen)}
+  {:schema   potato-schema
+   :generate {:generator nil
+              ;; example values for :generator include:
+              #_(comment
+                  ;; malli
+                  malli.generator/generate
+
+                  ;; clojure spec
+                  (comp clojure.spec.gen.alpha/generate clojure.spec.alpha/gen))}
    :fixtures (merge dfn/config
                     {:get-connection (fn [_] (db-connection))
                      :setup          (fn [{{:keys [connection]} :fixtures}]
-                                       (jdbc/execute! connection ["TRUNCATE TABLE user CASCADE"]))})})
+                                       ;; clear tables
+                                       )})})

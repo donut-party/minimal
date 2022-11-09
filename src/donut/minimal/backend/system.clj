@@ -45,7 +45,7 @@
     :db
     {:connection
      #::ds{:start  (fn [{:keys [::ds/config]}] (jdbc/get-datasource (:uri config)))
-           :config {:uri (env/env :db-uri "jdbc:postgresql://localhost/donut_minimal_dev?user=daniel&password=")}}
+           :config {:uri (env/env :db-uri "jdbc:postgresql://localhost/donut_minimal_dev?user=root&password=")}}
 
      :migratus
      #::ds{:start  (fn [{:keys [::ds/config]}]
@@ -66,7 +66,7 @@
   [_]
   (ds/system :dev
     {[:env]                        (env-config :test)
-     [:db :connection :conf :uri]  "jdbc:postgresql://localhost/donut_minimal_test?user=daniel&password="
+     [:db :connection :conf :uri]  "jdbc:postgresql://localhost/donut_minimal_test?user=root&password="
      [:db :run-migrations? :start] (fn [_ _ _]
                                      (when @run-migrations?
                                        (reset! run-migrations? false)

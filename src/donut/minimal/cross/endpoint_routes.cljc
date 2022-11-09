@@ -1,17 +1,19 @@
 (ns donut.minimal.cross.endpoint-routes
   (:require [donut.routes :as dr]
             #?@(:clj
-                [[donut.minimal.backend.endpoint.user :as user]])))
+                [;; endpoint namespaces go here
+                 ])))
 
 (def routes
   (dr/merge-route-opts
-   [["/api/v1/users"
-     {:name     :users
-      :ent-type :user
-      :id-key   :user/id}
-     #?(:clj user/collection-handlers)]
-    ["/api/v1/users/{:user/id}"
-     {:name     :user
-      :ent-type :user
-      :id-key   :user/id}
-     #?(:clj user/member-handlers)]]))
+   [;; example
+    #_["/api/v1/entities"
+       {:name     :entities
+        :ent-type :entity
+        :id-key   :entity/id}
+       #?(:clj entity/collection-handlers)]
+    #_["/api/v1/entities/{entity/id}"
+       {:name     :entity
+        :ent-type :entity
+        :id-key   :entity/id}
+       #?(:clj entity/member-handlers)]]))
