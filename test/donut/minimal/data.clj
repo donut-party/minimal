@@ -21,4 +21,5 @@
    :fixtures (merge dfn/config
                     {:get-connection (fn [_] (db-connection))
                      :setup          (fn [{{:keys [connection]} :fixtures}]
-                                       (jdbc/execute! connection ["TRUNCATE TABLE user CASCADE"]))})})
+                                       (comment
+                                         (jdbc/execute! connection ["TRUNCATE TABLE example_entity CASCADE"])))})})
