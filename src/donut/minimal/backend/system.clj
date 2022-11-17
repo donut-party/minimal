@@ -2,6 +2,7 @@
   (:require
    [aero.core :as aero]
    [clojure.java.io :as io]
+   [donut.bakery.backend.system-plugin :as bsp]
    [donut.middleware :as dm]
    [donut.minimal.backend.handler :as dh]
    [donut.minimal.cross.endpoint-routes :as endpoint-routes]
@@ -57,7 +58,8 @@
 
 (defmethod ds/named-system :dev
   [_]
-  (ds/system :base {[:env] (env-config :dev)}))
+  (-> (ds/system :base {[:env] (env-config :dev)})
+      (bsp/inject-plugin)))
 
 (defonce run-migrations? (atom true))
 

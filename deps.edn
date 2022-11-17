@@ -17,7 +17,7 @@
          party.donut/endpoint-test        {:mvn/version "0.0.18"}
          party.donut/generate             {:mvn/version "1.0.9"}
          party.donut/generators           {:mvn/version "0.0.5"}
-         party.donut/routes               {:mvn/version "0.0.5"}
+         party.donut/routes               {:mvn/version "0.0.6"}
          party.donut/middleware           {:mvn/version "0.0.6"}
          party.donut/sugar                {:mvn/version "0.0.16"}
          party.donut/system               {:mvn/version "0.0.167"}
@@ -29,6 +29,7 @@
  {:dev
   {:extra-deps  {com.nextjournal/beholder    {:mvn/version "1.0.0"}
                  org.clojure/tools.namespace {:mvn/version "1.1.0"}
+                 party.donut/bakery          {:local/root "../bakery"}
                  ring/ring-mock              {:mvn/version "0.4.0"}}
    :extra-paths ["dev/src" "test"]}
 
@@ -37,7 +38,7 @@
                                   party.donut/endpoint-test                 {:local/root "../endpoint-test"}
                                   party.donut/frontend                      {:local/root "../frontend"}
                                   party.donut/generate                      {:local/root "../generate"}
-                                  party.donut/generators                    {:local/root "../generator"}
+                                  party.donut/generators                    {:local/root "../generators"}
                                   party.donut/middleware                    {:local/root "../middleware"}
                                   party.donut/routes                        {:local/root "../routes"}
                                   party.donut/sugar                         {:local/root "../sugar"}
