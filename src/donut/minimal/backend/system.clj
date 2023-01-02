@@ -52,11 +52,11 @@
     :main-routes
     (derg/route-group
      {:group-path "/api/v1"
-      :group-opts {:db (ds/ref [:db :connection])}
+      :group-opts {:datasource (ds/ref [:db :datasource])}
       :routes     endpoint-routes/routes})
 
     :db
-    {:connection
+    {:datasource
      #::ds{:start  (fn [{:keys [::ds/config]}] (jdbc/get-datasource (:dbspec config)))
            :config {:dbspec (ds/ref [:env :dbspec])}}
 
@@ -65,7 +65,7 @@
                      (when (:run? config)
                        (migratus/migrate config)))
            :config {:run?          true
-                    :db            (ds/local-ref [:connection])
+                    :db            (ds/local-ref [:datasource])
                     :store         :database
                     :migration-dir "migrations"}}}}})
 

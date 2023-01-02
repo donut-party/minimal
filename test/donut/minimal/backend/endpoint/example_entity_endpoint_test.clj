@@ -1,4 +1,4 @@
-(ns donut.minimal.backend.endpoint.example-test
+(ns donut.minimal.backend.endpoint.example-entity-endpoint-test
   (:require
    [clojure.test :refer [deftest is use-fixtures]]
    [donut.datapotato.core :as dc]
