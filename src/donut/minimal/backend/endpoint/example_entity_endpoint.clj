@@ -8,13 +8,13 @@
    {:handler
     (fn [{:keys [dependencies]}]
       {:status 200
-       :body   (qe/entities (:db dependencies))})}
+       :body   (qe/entities (:datasource dependencies))})}
 
    :post
    {:handler
     (fn [{:keys [all-params dependencies]}]
       {:status 200
-       :body   (jsql/insert! (:db dependencies) :entity all-params)})}})
+       :body   (jsql/insert! (:datasource dependencies) :entity all-params)})}})
 
 (def member-parameters
   {:path [:map
@@ -25,19 +25,19 @@
    {:parameters member-parameters
     :handler    (fn [{:keys [all-params dependencies]}]
                   {:status 200
-                   :body   (qe/entity-by-id (:db dependencies) all-params)})}
+                   :body   (qe/entity-by-id (:datasource dependencies) all-params)})}
 
    :put
    {:parameters member-parameters
     :handler    (fn [{:keys [all-params dependencies]}]
-                  (jsql/update! (:db dependencies)
+                  (jsql/update! (:datasource dependencies)
                                 :entity
                                 (dissoc all-params :entity/id)
                                 (select-keys all-params [:entity/id]))
                   {:status 200
-                   :body   (qe/entity-by-id (:db dependencies) all-params)})}
+                   :body   (qe/entity-by-id (:datasource dependencies) all-params)})}
 
    :delete
    {:parameters member-parameters
     :handler    (fn [{:keys [all-params dependencies]}]
-                  (jsql/delete! (:db dependencies) :entity (select-keys all-params [:entity/id])))}})
+                  (jsql/delete! (:datasource dependencies) :entity (select-keys all-params [:entity/id])))}})
