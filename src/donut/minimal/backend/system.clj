@@ -2,9 +2,9 @@
   (:require
    [aero.core :as aero]
    [clojure.java.io :as io]
-   [donut.bakery.backend.system-plugin :as bsp]
-   [donut.middleware :as dm]
-   [donut.minimal.backend.handler :as dh]
+   [donut.endpoint.middleware :as dem]
+   [donut.endpoint.router :as der]
+   [donut.endpoint.route-group :as derg]
    [donut.minimal.cross.endpoint-routes :as endpoint-routes]
    [donut.system :as ds]
    [migratus.core :as migratus]
@@ -23,9 +23,6 @@
    {:env
     (env-config)
 
-    :middleware
-    (assoc dm/MiddlewareComponentGroup :routes endpoint-routes/routes)
-
     :http
     {:server
      #::ds{:start  (fn [{:keys [::ds/config]}]
@@ -36,11 +33,27 @@
                     :options {:port  (ds/ref [:env :http-port])
                               :join? false}}}
 
+     :middleware
+     dem/AppMiddlewareComponent
+
      :handler
-     #::ds{:start  (fn [{:keys [::ds/config]}] (dh/handler config))
-           :config {:db         (ds/ref [:db :connection])
-                    :router     (ds/ref [:middleware :router])
-                    :middleware (ds/ref [:middleware :middleware])}}}
+     #::ds{:start  (fn [{:keys [::ds/config]}]
+                     (let [{:keys [route-ring-handler middleware]} config]
+                       (middleware route-ring-handler)))
+           :config {:route-ring-handler (ds/ref [:routing :ring-handler])
+                    :middleware         (ds/local-ref [:middleware])}}}
+
+    :routing
+    {:ring-handler der/RingHandlerComponent
+     :router       der/RouterComponent
+     :router-opts  der/router-opts
+     :routes       [(ds/ref [:main-routes :route-group])]}
+
+    :main-routes
+    (derg/route-group
+     {:group-path "/api/v1"
+      :group-opts {:db (ds/ref [:db :connection])}
+      :routes     endpoint-routes/routes})
 
     :db
     {:connection
@@ -58,8 +71,7 @@
 
 (defmethod ds/named-system :dev
   [_]
-  (-> (ds/system :base {[:env] (env-config :dev)})
-      (bsp/inject-plugin)))
+  (ds/system :base {[:env] (env-config :dev)}))
 
 (defonce run-migrations? (atom true))
 
