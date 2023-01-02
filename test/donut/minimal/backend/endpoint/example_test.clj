@@ -5,7 +5,7 @@
    [donut.endpoint.test.harness :as deth]
    [donut.minimal.fixtures :as fixtures]))
 
-(use-fixtures :each (deth/system-fixture [:test]))
+(use-fixtures :each (deth/system-fixture {:system-name :test}))
 
 (comment
   ;; example tests for a hypothetical example-entity:

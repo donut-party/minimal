@@ -3,11 +3,12 @@
    [donut.datapotato.next-jdbc :as dfn]
    [donut.endpoint.test.harness :as deth]
    [donut.minimal.backend.system] ;; for multimethod
-   [next.jdbc :as jdbc]))
+   [next.jdbc :as jdbc]
+   [donut.system :as ds]))
 
 (defn db-connection
   []
-  (deth/instance [:db :connection]))
+  (get-in deth/*system* [::ds/instances :db :connection]))
 
 (def potato-schema
   {:example-entity {:prefix   :ee
