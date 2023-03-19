@@ -22,24 +22,24 @@
 
 (deftest gets-single-example-entity
   (dc/with-fixtures fixtures/datapotato-db
-    (let [{:keys [u0]} (dc/insert-fixtures {:example-entity [[2]]})]
-      (is (= [[:entities [:example-entity :example-entity/id [u0]]]]
-             (deth/read-body (deth/handle-request :get [:example-entity (select-keys u0 [:example-entity/id])])))))))
+    (let [{:keys [ee0]} (dc/insert-fixtures {:example-entity [[2]]})]
+      (is (= ee0
+             (deth/read-body (deth/handle-request :get [:example-entity ee0])))))))
 
 (deftest updates-example-entity
   (dc/with-fixtures fixtures/datapotato-db
-    (let [{:keys [u0]} (dc/insert-fixtures {:example-entity [[1]]})]
-      (is (= #:example-entity{:id       (:example-entity/id u0)
-                              :example-entityname "new-example-entity-name"}
+    (let [{:keys [ee0]} (dc/insert-fixtures {:example-entity [[1]]})]
+      (is (= #:example_entity{:id          (:example_entity/id ee0)
+                              :description "new desc"}
              (-> (deth/handle-request
                   :put
-                  [:example-entity (select-keys u0 [:example-entity/id])]
-                  {:example-entityname "new-example-entity-name"})
+                  [:example-entity ee0]
+                  {:example_entity/description "new desc"})
                  (deth/read-body)))))))
 
 (deftest deletes-example-entity
   (dc/with-fixtures fixtures/datapotato-db
-    (let [{:keys [u0]} (dc/insert-fixtures {:example-entity [[1]]})]
-      (deth/handle-request :delete [:example-entity (select-keys u0 [:example-entity/id])])
+    (let [{:keys [ee0]} (dc/insert-fixtures {:example-entity [[1]]})]
+      (deth/handle-request :delete [:example-entity ee0])
       (is (= []
              (deth/read-body (deth/handle-request :get :example-entities)))))))
