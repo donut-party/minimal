@@ -3,8 +3,9 @@
    [aero.core :as aero]
    [clojure.java.io :as io]
    [donut.endpoint.middleware :as dem]
-   [donut.endpoint.router :as der]
    [donut.endpoint.route-group :as derg]
+   [donut.endpoint.router :as der]
+   [donut.endpoint.test.harness :as deth]
    [donut.minimal.cross.endpoint-routes :as endpoint-routes]
    [donut.system :as ds]
    [migratus.core :as migratus]
@@ -67,7 +68,9 @@
            :config {:run?          true
                     :db            (ds/local-ref [:datasource])
                     :store         :database
-                    :migration-dir "migrations"}}}}})
+                    :migration-dir "migrations"}}}}
+
+   ::ds/plugins [deth/test-harness-plugin]})
 
 (defmethod ds/named-system :dev
   [_]

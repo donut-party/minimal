@@ -14,7 +14,7 @@
    {:handler
     (fn [{:keys [all-params dependencies]}]
       {:status 200
-       :body   (jsql/insert! (:datasource dependencies) :entity all-params)})}})
+       :body   (qe/insert! (:datasource dependencies) all-params)})}})
 
 (def member-parameters
   {:path [:map
@@ -31,13 +31,13 @@
    {:parameters member-parameters
     :handler    (fn [{:keys [all-params dependencies]}]
                   (jsql/update! (:datasource dependencies)
-                                :entity
-                                (dissoc all-params :entity/id)
-                                (select-keys all-params [:entity/id]))
+                                :example_entity
+                                (dissoc all-params :example_entity/id)
+                                (select-keys all-params [:example_entity/id]))
                   {:status 200
                    :body   (qe/entity-by-id (:datasource dependencies) all-params)})}
 
    :delete
    {:parameters member-parameters
     :handler    (fn [{:keys [all-params dependencies]}]
-                  (jsql/delete! (:datasource dependencies) :entity (select-keys all-params [:entity/id])))}})
+                  (jsql/delete! (:datasource dependencies) :example_entity (select-keys all-params [:example_entity/id])))}})
