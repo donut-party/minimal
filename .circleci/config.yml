@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  test-and-build:
+  test:
     environment:
       - _JAVA_OPTIONS: "-Xms512m -Xmx1024m"
     docker:
@@ -10,9 +10,9 @@ jobs:
       - run:
           name: test clj
           command: clojure -X:test
-      - run:
-          name: Build
-          command: clojure -T:build jar
+      # - run:
+          # name: Build
+          # command: clojure -T:build jar
       - save-cache:
           paths:
             - ~/bin
@@ -25,6 +25,6 @@ jobs:
 
 workflows:
   version: 2
-  deploy:
+  test:
     jobs:
-      - test-and-build
+      - test
