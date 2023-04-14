@@ -62,13 +62,14 @@
            :config {:dbspec (ds/ref [:env :dbspec])}}
 
      :migratus
-     #::ds{:start  (fn [{:keys [::ds/config]}]
-                     (when (:run? config)
-                       (migratus/migrate config)))
-           :config {:run?          true
-                    :db            (ds/local-ref [:datasource])
-                    :store         :database
-                    :migration-dir "migrations"}}}}
+     (ds/cache-component
+      #::ds{:start  (fn [{:keys [::ds/config] :as s}]
+                      (migratus/migrate config))
+            :config {:run?          true
+                     :db            (ds/local-ref [:datasource])
+                     :store         :database
+                     :migration-dir "migrations"}}
+      (ds/ref [:env :profile-name]))}}
 
    ::ds/plugins [deth/test-harness-plugin]})
 
@@ -76,22 +77,11 @@
   [_]
   (ds/system :base {[:env] (env-config :dev)}))
 
-(defonce run-migrations? (atom true))
-
 (defmethod ds/named-system :test
   [_]
   (ds/system :dev
     {[:env]
      (env-config :test)
-
-     [:db :run-migrations? :start]
-     (fn [_ _ _]
-       (when @run-migrations?
-         (reset! run-migrations? false)
-         true))
-
-     [:db :migratus ::ds/config :run?]
-     (ds/local-ref [:run-migrations?])
 
      [:http :server]
      ::disabled

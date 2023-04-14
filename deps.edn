@@ -14,16 +14,15 @@
 
          party.donut/datapotato           {:mvn/version "1.0.448"}
          party.donut/datapotato-next-jdbc {:mvn/version "1.0.448"}
-         party.donut/endpoint             {:mvn/version "0.0.23"}
-         party.donut/endpoint-test        {:mvn/version "0.0.20"}
+         party.donut/endpoint             {:mvn/version "0.0.25"}
+         party.donut/endpoint-test        {:mvn/version "0.0.28"}
          party.donut/generate             {:mvn/version "1.0.9"}
          party.donut/generators           {:mvn/version "0.0.5"}
          party.donut/routes               {:mvn/version "0.0.6"}
          party.donut/sugar                {:mvn/version "0.0.16"}
-         party.donut/system               {:mvn/version "0.0.195"}
+         party.donut/system               {:mvn/version "0.0.201"}
 
-         ring/ring          {:mvn/version "1.9.4"}
-         ring/ring-defaults {:mvn/version "0.3.3"}}
+         ring/ring          {:mvn/version "1.9.4"}}
 
  :aliases
  {:dev
