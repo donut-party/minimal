@@ -9,6 +9,7 @@
 .calva/output-window/
 .classpath
 .clj-kondo/.cache
+.clj-kondo
 .cljs_node_repl
 .cpcache
 .dir-locals.el
@@ -33,8 +34,11 @@
 /classes
 /target
 frontend-target
+java
 node_modules
 out
 output
 pom.xml*
+resources/public/css/main.css
 styles.css
+tmp

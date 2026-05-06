@@ -4,11 +4,11 @@
    [donut.frontend.core.flow :as dcf]
    [donut.frontend.core.utils :as dcu]
    [donut.frontend.nav.flow :as dnf]
-   [donut.system :as ds]
-   [donut.minimal.cross.endpoint-routes :as endpoint-routes]
+   [donut.generated.endpoint-routes :as endpoint-routes]
    [donut.minimal.frontend.app :as app]
    [donut.minimal.frontend.frontend-routes :as frontend-routes]
    [donut.minimal.frontend.subs] ;; load subs
+   [donut.system :as ds]
    [meta-merge.core :as meta-merge]
    [re-frame.core :as rf]
    [reagent.dom :as rdom]))

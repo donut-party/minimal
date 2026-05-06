@@ -4,6 +4,7 @@
    [clojure.java.io :as io]
    [donut.endpoint.middleware :as dem]
    [donut.endpoint.route-group :as derg]
+   [donut.endpoint.route-writer :as derw]
    [donut.endpoint.router :as der]
    [donut.endpoint.test.harness :as deth]
    [donut.minimal.cross.endpoint-routes :as endpoint-routes]
@@ -63,13 +64,17 @@
 
      :migratus
      (ds/cache-component
-      #::ds{:start  (fn [{:keys [::ds/config] :as s}]
+      #::ds{:start  (fn [{:keys [::ds/config]}]
                       (migratus/migrate config))
             :config {:run?          true
                      :db            (ds/local-ref [:datasource])
                      :store         :database
                      :migration-dir "migrations"}}
-      (ds/ref [:env :profile-name]))}}
+      (ds/ref [:env :profile-name]))}
+
+    :background
+    {:route-writer derw/RouteWriterComponent}}
+   
 
    ::ds/plugins [deth/test-harness-plugin]})
 

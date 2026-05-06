@@ -6,7 +6,7 @@
 
 (rf/reg-sub :example-entities
   (fn [db]
-    (dcu/entities db :example-entity :example_entity/id)))
+    (dcu/entities db :example-entity)))
 
 (rf/reg-sub :routed-example-entity
   (fn [db]
