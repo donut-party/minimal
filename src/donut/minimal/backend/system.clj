@@ -34,15 +34,15 @@
                     :options {:port  (ds/ref [:env :http-port])
                               :join? false}}}
 
-     :middleware
-     dem/AppMiddlewareComponent
-
      :handler
      #::ds{:start  (fn [{:keys [::ds/config]}]
                      (let [{:keys [route-ring-handler middleware]} config]
                        (middleware route-ring-handler)))
            :config {:route-ring-handler (ds/ref [:routing :ring-handler])
-                    :middleware         (ds/local-ref [:middleware])}}}
+                    :middleware         (ds/ref [:middleware :donut-middleware])}}}
+
+    :middleware
+    dem/DonutMiddlewareComponentGroup
 
     :routing
     {:ring-handler der/RingHandlerComponent
@@ -52,9 +52,9 @@
 
     :main-routes
     (derg/route-group
-     {:group-path "/api/v1"
-      :group-opts {:datasource (ds/ref [:db :datasource])}
-      :routes     endpoint-routes/routes})
+     {:path-prefix "/api/v1"
+      :shared-opts {:datasource (ds/ref [:db :datasource])}
+      :routes      endpoint-routes/routes})
 
     :db
     {:datasource
@@ -75,16 +75,15 @@
 
 (defmethod ds/named-system :dev
   [_]
-  (ds/system :base {[:env] (env-config :dev)}))
+  (ds/system :base
+    {:env (env-config :dev)
+     :middleware {:session-store {::ds/config {:key (.getBytes "0123456789abcdef")}}}}))
 
 (defmethod ds/named-system :test
   [_]
   (ds/system :dev
-    {[:env]
+    {:env
      (env-config :test)
 
-     [:http :server]
-     ::disabled
-
-     [:http :middleware ::ds/config :security :anti-forgery]
-     false}))
+     :http {:server     ::disabled
+            :middleware {::ds/config {:security {:anti-forgery false}}}}}))

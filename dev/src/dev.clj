@@ -7,7 +7,6 @@
    [donut.generate :as dg]
    [donut.generators :as dgs] ;; registor generators
    [donut.minimal.backend.system :as sys]
-   [donut.routes :as dr]
    [donut.system :as ds]
    [donut.system.repl :as dsr]
    [donut.system.repl.state :as dsrs]
