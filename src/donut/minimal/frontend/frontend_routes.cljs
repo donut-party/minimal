@@ -2,11 +2,12 @@
   (:require
    [reitit.coercion.malli :as rm]
    [donut.frontend.form.flow :as dff]
+   [donut.frontend.routes :as dfr]
    [donut.frontend.sync.flow :as dsf]
    [donut.minimal.frontend.components.home :as h]
    [donut.minimal.frontend.components.example-entity :as ee]))
 
-(def routes
+(dfr/defroutes routes
   [["/"
     {:name       :home
      :components {:main [h/component]}
