@@ -1,4 +1,1 @@
-{:lint-as {;; imperfect, but good enough
-           lambdaisland.ornament/defstyled clojure.core/defmacro}
- :config-paths ["party.donut/frontend"
-                "metosin/malli"]}
+{}
