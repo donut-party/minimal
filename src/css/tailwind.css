@@ -1,4 +1,2 @@
 @import "tailwindcss";
-/* TODO this doesn't seem to work */
-@source not "../donut/minimal/backend";
-@source not "../donut/minimal/generated";
+@plugin "daisyui";
